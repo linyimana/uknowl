@@ -147,7 +147,9 @@ class Integral {
 			);
     		$author = self::object_array($author);
     		$uid = $author['rev_user'];
-
+    		if($author['rev_user'] == $uid){
+				return false;
+			}
     		//根据页面ID 查找页面内容
     		$content = $dbw->selectRow(
 				'text',
