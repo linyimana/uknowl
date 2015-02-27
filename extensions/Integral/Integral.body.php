@@ -147,9 +147,15 @@ class Integral {
 			);
     		$author = self::object_array($author);
     		$uid = $author['rev_user'];
+
+    		// pangding
     		if($uid == $_SESSION['wsUserID']){
 				return false;
 			}
+			if($_GET['action'] != ""){
+				return false;
+			}
+			
     		//根据页面ID 查找页面内容
     		$content = $dbw->selectRow(
 				'text',
