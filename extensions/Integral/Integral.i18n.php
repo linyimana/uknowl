@@ -12,7 +12,7 @@ $messages = array();
 
 # English
 $messages['en'] = array( 
-	'integralUrlTitle' => '积分' 
+	'integralUrlTitle' => 'Integral' 
 	);
 
 # French
