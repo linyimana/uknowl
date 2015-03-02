@@ -92,7 +92,7 @@ class Integral {
 	}
 	static function registerHooks() {
 		global $wgHooks, $wgExtensionCredits,$wgTitle;
-		if($_SESSION['wsUserID']){
+		if($_SESSION['wsUserID'] && $_SESSION['wsUserName']){
 			$wgHooks['PersonalUrls'][0] = 'setBarItem';
 		}
 		
