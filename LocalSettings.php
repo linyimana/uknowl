@@ -147,8 +147,8 @@ $wgDefaultUserOptions['wikieditor-preview'] = 1;
 # Displays the Publish and Cancel buttons on the top right side
 $wgDefaultUserOptions['wikieditor-publish'] = 1;
 
-
-
+require_once "$IP/extensions/UniversalLanguageSelector/UniversalLanguageSelector.php";
+$wgULSGeoService = false; 
 
 $wgCacheEpoch = date( "YmdHis" ); #每秒钟
 $wgShowIPinHeader = false;

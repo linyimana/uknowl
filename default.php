@@ -51,7 +51,6 @@ require __DIR__ . '/includes/WebStart.php';
 					$result['integral'] = 0;
 				}
     			if($_SESSION['wsUserID'] && $_SESSION['wsUserName']){
-Contributions
     		?>Hello:<a href="/index.php/User:<?php echo $_SESSION['wsUserName'] ?>"><?php echo $_SESSION['wsUserName'] ?></a> <a href="/index.php/User_talk:<?php echo $_SESSION['wsUserName'] ?>"><?php echo wfMsg('mytalk');?></a> <a href="/index.php/Special:<?php echo wfMsg('Preferences');?>"><?php echo wfMsg('Preferences');?></a> <a href="/index.php/Special:<?php echo wfMsg('Watchlist');?>"><?php echo wfMsg('Watchlist');?></a> <a href="/index.php/Special:Contributions/<?php echo $_SESSION['wsUserName'] ?>"><?php wfMsg('Contributions');?></a> <a href="/index.php?title=Special:<?php echo $_SESSION['UserLogout'] ?>&amp;returnto=Main+Page"><?php echo wfMsg('Logout');?></a> <a href="/"><?php echo $_SESSION['Integral'] ?>:<?php echo $result['integral'];?></a>
     		<?php
     		}else{
@@ -82,6 +81,7 @@ Contributions
         	</a></td></tr>
         	</table>
         </div>
+
         <div class="footer">
         	<a href="index.php/<?php echo $wgSitename;?>:<?php echo wfMsg('privacy');?>"><?php echo wfMsg('privacy');?></a> &nbsp; 
         	<a href="index.php/<?php echo $wgSitename;?>:<?php echo wfMsg('about');?>"><?php echo wfMsg('about');?><?php echo $wgSitename;?></a> &nbsp; 

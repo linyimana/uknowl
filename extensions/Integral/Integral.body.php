@@ -50,7 +50,8 @@ class Integral {
 
 	    		foreach ( $lines as $line ) {
 	    			$m = array();
-					if ( preg_match( '/^==+ *([^*:\s|]+?)\s*==+\s*$/', $line, $m ) ) {
+					//if ( preg_match( '/^==+ *([^*:\s|]+?)\s*==+\s*$/', $line, $m ) ) {
+	    			if ( preg_match( '/^==+ *([^*]+?)\s*==+\s*$/', $line, $m ) ) {
 						$section[] = $m[1];
 					}
 	    		}
@@ -109,10 +110,15 @@ class Integral {
 			if(empty($result)){
 				$result['integral'] = 0;
 			}
-		    $personal_urls['Integral'] = array(
-		        'text' => wfMsg( 'integralUrlTitle' ).':'.$result['integral'],
-		        'href' => '/',
-		    );
+
+			$personal_urls = array(
+				'Integral' => array(
+					'text' => wfMsg( 'integralUrlTitle' ).':'.$result['integral'],
+					'href' => '/jifen.php'
+				)
+			) + $personal_urls;
+
+		    
 		}
 		Integral::isWords();
 		return true;
@@ -138,20 +144,25 @@ class Integral {
     	if(!$result['page_namespace']){
     		$page_id = $result['page_id'];
 
+    		//取得页面信息
+    		// $pages = $dbw->selectRow('page','*',array( 'page_id' => $page_id ));
+    		// $pages = self::object_array($pages);
+
+
     		//根据页面ID 查找页面作者
     		$author = $dbw->selectRow(
 				'revision',
 				'*',
 				array( 'rev_page' => $page_id ),
-				__METHOD__,array( 'ORDER BY' => 'rev_id DESC', 'LIMIT' => 1 )
+				__METHOD__,array( 'ORDER BY' => 'rev_id desc', 'LIMIT' => 1 )
 			);
     		$author = self::object_array($author);
     		$uid = $author['rev_user'];
 
     		// pangding
-    		if($uid == $_SESSION['wsUserID']){
-				return false;
-			}
+   //  		if($uid == $_SESSION['wsUserID']){
+			// 	return false;
+			// }
 			if($_GET['action'] != ""){
 				return false;
 			}
@@ -170,10 +181,17 @@ class Integral {
 
     		foreach ( $lines as $line ) {
     			$m = array();
-				if ( preg_match( '/^==+ *([^*:\s|]+?)\s*==+\s*$/', $line, $m ) ) {
+				//if ( preg_match( '/^==+ *([^*:\s|]+?)\s*==+\s*$/', $line, $m ) ) {
+    			if ( preg_match( '/^==+ *([^*]+?)\s*==+\s*$/', $line, $m ) ) {
 					$section[] = $m[1];
 				}
     		}
+
+    		if($section){
+				foreach ($section as $key =>$vo) {
+					self::insert_section($page_id,$vo,$uid);
+				}
+			}
     		// print_r($section);exit;
     		// echo '<meta http-equiv="content-type" content="text/html;charset=utf-8">';
 			if($section){
@@ -193,7 +211,21 @@ class Integral {
 			}
     	}
 	}
-
+	function insert_section($pageid,$sectionName,$uid){
+		$dbw = wfGetDB( DB_SLAVE );
+		$info=$dbw->selectRow('integral','*',array('page_id'=> $pageid,"section_title"=>$sectionName),__METHOD__);
+		$info = self::object_array($info);
+		if(empty($info)){
+			//Insert
+			$data['id']			   = null;
+			$data['page_id']       = $pageid;
+			$data['section']       = 1;
+			$data['section_user']  = $uid;
+			$data['section_title'] = $sectionName;
+			$dbw->insert( 'integral', $data);
+		}
+		return true;
+	}
 	/**
 	 * User Integral
 	 */

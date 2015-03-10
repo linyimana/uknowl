@@ -44,3 +44,8 @@ require __DIR__ . '/includes/WebStart.php';
 
 $mediaWiki = new MediaWiki();
 $mediaWiki->run();
+?>
+
+<style type="text/css">
+	#ca-edit {display:none}
+</style>
